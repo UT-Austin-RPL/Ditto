@@ -1,0 +1,54 @@
+_target_: src.datamodules.default_datamodule.DefaultDataModule
+
+opt:
+  train:
+    dataset_type: GeoArtDatasetV0
+    data_dir: ${data_dir} # data_dir is specified in config.yaml
+    data_path:
+      - syn/cabinet2_rand_fcgf_train_1K
+      - syn/drawer_fcgf_train_1K
+      - syn/microwave_fcgf_train_1K
+      - syn/toaster_fcgf_train_1K
+    num_point: 8192
+    num_point_occ: 2048
+    num_point_seg: 512
+    norm: True
+    norm_padding: 0.1
+    batch_size: 32
+    num_workers: 4
+    rand_rot: False # random rotation of input data
+    weighted_occ_sample: False
+
+  val:
+    dataset_type: GeoArtDatasetV1
+    data_dir: ${data_dir} # data_dir is specified in config.yaml
+    data_path:
+      - syn/cabinet2_rand_fcgf_val_50
+      - syn/drawer_fcgf_val_50
+      - syn/microwave_fcgf_val_50
+      - syn/toaster_fcgf_val_50
+    num_point: 8192
+    #num_point_occ: 90000
+    #num_point_seg: 5000
+    norm: True
+    norm_padding: 0.1
+    batch_size: 1
+    num_workers: 4
+    rand_rot: False # random rotation of input data
+
+  test:
+    dataset_type: GeoArtDatasetV1
+    data_dir: ${data_dir} # data_dir is specified in config.yaml
+    data_path:
+      - syn/cabinet2_rand_fcgf_test_standard
+      - syn/drawer_fcgf_test_standard
+      - syn/microwave_fcgf_test_standard
+      - syn/toaster_fcgf_test_standard
+    num_point: 8192
+    #num_point_occ: 90000
+    #num_point_seg: 5000
+    norm: True
+    norm_padding: 0.1
+    batch_size: 1
+    num_workers: 4
+    rand_rot: False # random rotation of input data

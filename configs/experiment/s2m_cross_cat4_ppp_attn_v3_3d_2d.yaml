@@ -1,0 +1,60 @@
+# @package _global_
+
+# to execute this experiment run:
+# python run.py experiment=example_simple.yaml
+
+# full model
+# separate ppp decoder
+# separate feature
+defaults:
+  - override /trainer: minimal.yaml # choose trainer from 'configs/trainer/'
+  - override /model: joint_seg_model_v0.yaml
+  - override /model/network: joint_seg_net_pointnetpp_attn_v4_simple_4d_sep_dec.yaml
+  - override /datamodule: joint_seg_datamodule
+  - override /callbacks: default.yaml
+  - override /logger: null
+
+# all parameters below will be merged with parameters from default configurations set above
+# this allows you to overwrite only specified parameters
+
+seed: 12345
+
+trainer:
+  min_epochs: 1
+  max_epochs: 100
+
+callbacks:
+  early_stopping:
+    patience: 20
+
+model:
+  opt:
+    hparams:
+      learning_rate: 1.0e-4
+      weight_decay: 0.0001
+      loss_weight_attn: 0.0
+
+datamodule:
+  opt:
+    train:
+      batch_size: 8
+      num_point: 8192
+      data_path:
+        - Shape2Motion/laptop_fcgf_train_1K
+        - Shape2Motion/oven_fcgf_train_1K
+        - Shape2Motion/faucet_fcgf_train_1K
+        - Shape2Motion/cabinet_fcgf_train_1K
+    val:
+      num_point: 8192
+      data_path:
+        - Shape2Motion/laptop_fcgf_val_50
+        - Shape2Motion/oven_fcgf_val_50
+        - Shape2Motion/faucet_fcgf_val_50
+        - Shape2Motion/cabinet_fcgf_val_50
+    test:
+      num_point: 8192
+      data_path:
+        - Shape2Motion/laptop_fcgf_test_standard
+        - Shape2Motion/oven_fcgf_test_standard
+        - Shape2Motion/faucet_fcgf_test_standard
+        - Shape2Motion/cabinet_fcgf_test_standard

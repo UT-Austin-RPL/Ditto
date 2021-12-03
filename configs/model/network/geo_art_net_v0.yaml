@@ -1,0 +1,87 @@
+network_type: ConvONets
+convonet_type: ConvolutionalOccupancyNetworkGeoArt
+c_dim: 64
+# occ decoder and seg decoder
+decoder:
+  - simple_local_v1
+  - simple_local_v1
+  - simple_local_v1
+  - simple_local_v1
+  - simple_local_v1
+decoder_kwargs:
+  - concat_feat: True # implicit occ
+    c_dim: 64
+    dim: 3
+    hidden_size: 64
+    sample_mode: bilinear
+    feature_keys:
+      - geo_grid
+  - concat_feat: True # seg
+    c_dim: 192
+    dim: 3
+    hidden_size: 64
+    sample_mode: bilinear
+    feature_keys:
+      - corr_xy
+      - corr_yz
+      - corr_xz
+  - concat_feat: True # joint type
+    c_dim: 192
+    dim: 3
+    hidden_size: 64
+    sample_mode: bilinear
+    feature_keys:
+      - corr_xy
+      - corr_yz
+      - corr_xz
+  - concat_feat: True # revolute joint parameters
+    c_dim: 192
+    dim: 3
+    hidden_size: 64
+    out_dim: 8
+    sample_mode: bilinear
+    feature_keys:
+      - corr_xy
+      - corr_yz
+      - corr_xz
+  - concat_feat: True # prismatic joint parameters
+    c_dim: 192
+    dim: 3
+    hidden_size: 64
+    out_dim: 4
+    sample_mode: bilinear
+    feature_keys:
+      - corr_xy
+      - corr_yz
+      - corr_xz
+encoder: pointnetpp
+encoder_kwargs:
+  plane_type:
+    - geo_grid
+    - corr_xy
+    - corr_yz
+    - corr_xz
+  plane_resolution: 64
+  grid_resolution: 32
+  unet: False
+  # unet_kwargs:
+  #   depth: 5
+  #   merge_mode: concat
+  #   start_filts: 32
+  unet3d: true
+  unet3d_kwargs:
+    num_levels: 4
+    f_maps: 64
+    in_channels: 64
+    out_channels: 64
+
+  unet_corr: true
+  unet_kwargs_corr:
+    depth: 5
+    merge_mode: concat
+    start_filts: 32
+  unet3d_corr: False
+  feat_pos: attn
+  attn_kwargs:
+    type: simple
+padding: 0

@@ -1,0 +1,48 @@
+<?xml version="1.0" ?>
+<robot name="block">
+	<link name="base_link">
+		<visual>
+			<origin rpy="0.0 0.0 0.0" xyz="0 0 0"/>
+			<geometry>
+				<mesh filename="static.obj"/>
+			</geometry>
+		</visual>
+		<collision>
+			<origin rpy="0.0 0.0 0.0" xyz="0 0 0"/>
+			<geometry>
+				<mesh filename="static.obj"/>
+			</geometry>
+		</collision>
+		<inertial>
+			<origin rpy="0 0 0" xyz="0 0 0"/>
+			<mass value="0.0"/>
+			<inertia ixx="0.0" ixy="0.0" ixz="0.0" iyy="0.0" iyz="0.0" izz="0.0"/>
+		</inertial>
+	</link>
+	<link name="1">
+		<visual>
+			<origin rpy="0.0 0.0 0.0" xyz="joint_position_r"/>
+			<geometry>
+				<mesh filename="mobile.obj"/>
+			</geometry>
+		</visual>
+		<collision>
+			<origin rpy="0.0 0.0 0.0" xyz="joint_position_r"/>
+			<geometry>
+				<mesh filename="mobile.obj"/>
+			</geometry>
+		</collision>
+		<inertial>
+			<origin rpy="0 0 0" xyz="0 0 0"/>
+			<mass value="3.0"/>
+			<inertia ixx="100" ixy="100" ixz="100" iyy="100" iyz="100" izz="100"/>
+		</inertial>
+	</link>
+	<joint name="0_j_1" type="joint_type">
+		<parent link="base_link"/>
+		<child link="1"/>
+		<origin rpy="0 0 0" xyz="joint_position"/>
+		<axis xyz="joint_axis"/>
+		<limit effort="1.0" lower="joint_state_lower" upper="joint_state_upper" velocity="1000"/>
+	</joint>
+</robot>

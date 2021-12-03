@@ -1,0 +1,39 @@
+_target_: src.models.geo_art_model_v0.GeoArtModelV0
+
+defaults:
+  - network: geo_art_net_v0.yaml
+
+opt:
+  hparams:
+    learning_rate: 1.0e-4
+    weight_decay: 0
+    lr_decay_gamma: 0.9
+    lr_decay_freq: 200
+
+    loss_weight_occ: 1.0
+    loss_weight_seg: 1.0
+    loss_weight_joint_type: 1.0
+    loss_weight_joint_param: 1.0
+
+    no_seg_mask: True
+
+    p_ori_arccos: True
+    p_ori_weight: 1.0
+    p_offset_weight: 1.0
+    p_use_state_loss: True
+
+    r_ori_arccos: True
+    r_ori_weight: 1.0
+    r_p2l_ori_arccos: True
+    r_p2l_ori_weight: 1.0
+    r_p2l_dist_weight: 1.0
+    r_use_state_loss: True
+    r_state_weight: 1.0
+    r_rot_weight: 1.0
+    r_displacement_weight: 1.0
+
+    test_occ_th: 0.5
+    test_seg_th: 0.5
+    test_res: 32
+    eval_mesh: True
+    eval_auto_switch: False
