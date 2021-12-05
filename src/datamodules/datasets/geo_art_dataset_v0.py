@@ -92,6 +92,15 @@ class GeoArtDatasetV0(Dataset):
             )
             occ_label = occ_label[occ_idx_start]
 
+        screw_point = np.cross(screw_axis, screw_moment)
+        # random rotation
+        if self.rand_rot:
+            rand_rot_mat = Rotation.random().as_matrix()
+            pc_start = rand_rot_mat.dot(pc_start.T).T
+            pc_end = rand_rot_mat.dot(pc_end.T).T
+            screw_point = rand_rot_mat.dot(screw_point)
+
+        # normalize
         bound_max = np.maximum(pc_start.max(0), pc_end.max(0))
         bound_min = np.minimum(pc_start.min(0), pc_end.min(0))
         center = (bound_min + bound_max) / 2
@@ -108,7 +117,6 @@ class GeoArtDatasetV0(Dataset):
         # ((p - c) / s) X l
         # = (p X l) / s - (c X l) / s
         # = m / s - (c X l) / s
-        screw_point = np.cross(screw_axis, screw_moment)
         screw_point = (screw_point - center) / scale
 
         screw_moment = np.cross(screw_point, screw_axis)

@@ -52,6 +52,9 @@ def train(config: DictConfig) -> Optional[float]:
     if "logger" in config:
         for _, lg_conf in config["logger"].items():
             if "_target_" in lg_conf:
+                # set wandb log name
+                # if 'WandbLogger' in lg_conf["_target_"]:
+                #     lg_conf['name'] = 123
                 log.info(f"Instantiating logger <{lg_conf._target_}>")
                 logger.append(hydra.utils.instantiate(lg_conf))
 

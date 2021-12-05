@@ -21,6 +21,7 @@ opt:
     p_ori_weight: 1.0
     p_offset_weight: 1.0
     p_use_state_loss: True
+    p_cos_ambiguity: False
 
     r_ori_arccos: True
     r_ori_weight: 1.0
@@ -28,6 +29,7 @@ opt:
     r_p2l_ori_weight: 1.0
     r_p2l_dist_weight: 1.0
     r_use_state_loss: True
+    r_cos_ambiguity: False
     r_state_weight: 1.0
     r_rot_weight: 1.0
     r_displacement_weight: 1.0

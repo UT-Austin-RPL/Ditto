@@ -8,9 +8,9 @@
 # separate feature
 defaults:
   - override /trainer: minimal.yaml # choose trainer from 'configs/trainer/'
-  - override /model: joint_seg_model_v0.yaml
-  - override /model/network: joint_seg_net_pointnetpp_attn_v4_simple_4d_sep_dec.yaml
-  - override /datamodule: joint_seg_datamodule
+  - override /model: geo_art_model_v0.yaml
+  - override /model/network: geo_art_net_v0.yaml
+  - override /datamodule: default_datamodule
   - override /callbacks: default.yaml
   - override /logger: null
 

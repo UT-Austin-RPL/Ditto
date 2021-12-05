@@ -57,19 +57,27 @@ def skew(vector: torch.Tensor) -> torch.Tensor:
     return result
 
 
-def cosine_loss_with_ambiguity(pred_axis, gt_axis):
+def cosine(pred_axis, gt_axis, ambiguity=False):
     # pred: B * N * 3
     # target: B * 3
-    cosine_sim_0 = torch.einsum("bnm,bm->bn", pred_axis, -gt_axis)
-    cosine_sim_1 = torch.einsum("bnm,bm->bn", pred_axis, gt_axis)
-    cosine_sim_max = torch.maximum(cosine_sim_0, cosine_sim_1)
-    return -cosine_sim_max
+    if ambiguity:
+        cosine_sim_0 = torch.einsum("bnm,bm->bn", pred_axis, -gt_axis)
+        cosine_sim_1 = torch.einsum("bnm,bm->bn", pred_axis, gt_axis)
+        cosine_sim_max = torch.maximum(cosine_sim_0, cosine_sim_1)
+    else:
+        cosine_sim_max = torch.einsum("bnm,bm->bn", pred_axis, gt_axis)
+    return cosine_sim_max
 
 
 class PrismaticLoss(nn.Module):
     def __init__(self, param_dict):
         super().__init__()
         self.param_dict = param_dict
+        if (
+            self.param_dict["p_cos_ambiguity"]
+            and not self.param_dict["p_use_state_loss"]
+        ):
+            raise ValueError("Don't use ambiguous cosine loss & enforce state loss")
 
     def forward(self, seg_label, pred_axis, pred_t, gt_axis, gt_t, debug=False):  # B*N
         """
@@ -81,7 +89,9 @@ class PrismaticLoss(nn.Module):
         pred_axis_ = normalize(pred_axis, 2)
         # axis ori loss
         loss = 0.0
-        ori_cos = torch.einsum("bnm,bm->bn", pred_axis_, gt_axis)
+        ori_cos = cosine(
+            pred_axis_, gt_axis, ambiguity=self.param_dict["p_cos_ambiguity"]
+        )
         if self.param_dict["p_ori_arccos"]:
             loss_ori = torch.arccos(torch.clamp(ori_cos, min=-0.9999, max=0.9999))
         else:
@@ -129,6 +139,11 @@ class RevoluteLoss(nn.Module):
     def __init__(self, param_dict):
         super().__init__()
         self.param_dict = param_dict
+        if (
+            self.param_dict["r_cos_ambiguity"]
+            and not self.param_dict["r_use_state_loss"]
+        ):
+            raise ValueError("Don't use ambiguous cosine loss & enforce state loss")
 
     def forward(
         self,
@@ -148,7 +163,9 @@ class RevoluteLoss(nn.Module):
         pred_p2l_vec_ = normalize(pred_p2l_vec, 2)
         # rotation axis ori loss
         loss = 0.0
-        ori_cos = torch.einsum("bnm,bm->bn", pred_axis_, gt_axis)
+        ori_cos = cosine(
+            pred_axis_, gt_axis, ambiguity=self.param_dict["r_cos_ambiguity"]
+        )
         if self.param_dict["r_ori_arccos"]:
             loss_ori = torch.arccos(torch.clamp(ori_cos, min=-0.9999, max=0.9999))
         else:

@@ -9,7 +9,7 @@ log = utils.get_logger(__name__)
 
 
 class OnCheckpointHparams(Callback):
-    def on_save_checkpoint(self, trainer, pl_module):
+    def on_save_checkpoint(self, trainer, pl_module, checkpoint):
         # only do this 1 time
         if trainer.current_epoch == 0:
             file_path = f"{os.getcwd()}/hparams.yaml"

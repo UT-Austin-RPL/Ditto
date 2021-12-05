@@ -2,8 +2,8 @@
 
 wandb:
   _target_: pytorch_lightning.loggers.wandb.WandbLogger
-  project: "motion2urdf"
-  name: null
+  project: "Ditto"
+  name: ${hydra:runtime.choices.experiment}-${now:%H-%M-%S}
   save_dir: "."
   offline: False # set True to store all logs only locally
   id: null # pass correct id to resume experiment!
