@@ -212,7 +212,13 @@ class GeoArtModelV0(pl.LightningModule):
 
         if data["joint_type"].item() == 0:  # revoluted
             self.revoluted_axis_ori_meter.update(revolute_result_dict["axis_ori"])
-            self.revoluted_degree_meter.update((gt_t - joint_r_t).abs())
+            if self.hparams["r_cos_ambiguity"]:
+                config_error = torch.minimum(
+                    (gt_t - joint_r_t).abs(), (gt_t + joint_r_t).abs()
+                )
+            else:
+                config_error = (gt_t - joint_r_t).abs()
+            self.revoluted_degree_meter.update((config_error).abs())
             self.revoluted_p2l_ori_meter.update(revolute_result_dict["p2l_ori"])
             self.revoluted_p2l_dist_meter.update(revolute_result_dict["p2l_dist"])
             self.revoluted_displacement_meter.update(
@@ -221,6 +227,13 @@ class GeoArtModelV0(pl.LightningModule):
 
         elif data["joint_type"].item() == 1:  # prismatic
             self.prismatic_axis_ori_meter.update(prismatic_result_dict["axis_ori"])
+            if self.hparams["p_cos_ambiguity"]:
+                config_error = torch.minimum(
+                    (gt_t - joint_p_t).abs(), (gt_t + joint_p_t).abs()
+                )
+            else:
+                config_error = (gt_t - joint_p_t).abs()
+            self.revoluted_degree_meter.update((config_error).abs())
             self.prismatic_offset_meter.update((gt_t - joint_p_t).abs())
         return loss
 

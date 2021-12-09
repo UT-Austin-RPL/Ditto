@@ -98,6 +98,11 @@ class GeoArtDatasetV0(Dataset):
             rand_rot_mat = Rotation.random().as_matrix()
             pc_start = rand_rot_mat.dot(pc_start.T).T
             pc_end = rand_rot_mat.dot(pc_end.T).T
+            pc_start_end = rand_rot_mat.dot(pc_start_end.T).T
+            pc_end_start = rand_rot_mat.dot(pc_end_start.T).T
+            p_occ_start = rand_rot_mat.dot(p_occ_start.T).T
+            p_seg_start = rand_rot_mat.dot(p_seg_start.T).T
+            screw_axis = rand_rot_mat.dot(screw_axis)
             screw_point = rand_rot_mat.dot(screw_point)
 
         # normalize

@@ -64,7 +64,6 @@ class LocalPoolPointnetPPFusion(nn.Module):
         super().__init__()
         self.c_dim = c_dim
         self.return_score = return_score
-
         if feat_pos == "attn":
             self.feat_pos = PointNetPlusPlusAttnFusion(
                 c_dim=hidden_dim * 2, attn_kwargs=attn_kwargs

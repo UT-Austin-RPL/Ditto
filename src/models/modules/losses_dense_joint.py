@@ -73,10 +73,7 @@ class PrismaticLoss(nn.Module):
     def __init__(self, param_dict):
         super().__init__()
         self.param_dict = param_dict
-        if (
-            self.param_dict["p_cos_ambiguity"]
-            and not self.param_dict["p_use_state_loss"]
-        ):
+        if self.param_dict["p_cos_ambiguity"] and self.param_dict["p_use_state_loss"]:
             raise ValueError("Don't use ambiguous cosine loss & enforce state loss")
 
     def forward(self, seg_label, pred_axis, pred_t, gt_axis, gt_t, debug=False):  # B*N
@@ -139,10 +136,7 @@ class RevoluteLoss(nn.Module):
     def __init__(self, param_dict):
         super().__init__()
         self.param_dict = param_dict
-        if (
-            self.param_dict["r_cos_ambiguity"]
-            and not self.param_dict["r_use_state_loss"]
-        ):
+        if self.param_dict["r_cos_ambiguity"] and self.param_dict["r_use_state_loss"]:
             raise ValueError("Don't use ambiguous cosine loss & enforce state loss")
 
     def forward(
