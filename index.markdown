@@ -1,0 +1,239 @@
+---
+layout: common
+permalink: /
+categories: projects
+---
+
+<link href='https://fonts.googleapis.com/css?family=Titillium+Web:400,600,400italic,600italic,300,300italic' rel='stylesheet' type='text/css'>
+<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Ditto</title>
+
+
+<!-- <meta property="og:image" content="images/teaser_fb.jpg"> -->
+<meta property="og:title" content="TITLE">
+
+<script src="./src/popup.js" type="text/javascript"></script>
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+
+<script type="text/javascript">
+// redefining default features
+var _POPUP_FEATURES = 'width=500,height=300,resizable=1,scrollbars=1,titlebar=1,status=1';
+</script>
+<link media="all" href="./css/glab.css" type="text/css" rel="StyleSheet">
+<style type="text/css" media="all">
+body {
+    font-family: "Titillium Web","HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+    font-weight:300;
+    font-size:18px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+  }
+  
+  h1 {
+    font-weight:300;
+  }
+  h2 {
+    font-weight:300;
+  }
+  
+IMG {
+  PADDING-RIGHT: 0px;
+  PADDING-LEFT: 0px;
+  <!-- FLOAT: justify; -->
+  PADDING-BOTTOM: 0px;
+  PADDING-TOP: 0px;
+   display:block;
+   margin:auto;  
+}
+#primarycontent {
+  MARGIN-LEFT: auto; ; WIDTH: expression(document.body.clientWidth >
+1000? "1000px": "auto" ); MARGIN-RIGHT: auto; TEXT-ALIGN: left; max-width:
+1000px }
+BODY {
+  TEXT-ALIGN: center
+}
+hr
+  {
+    border: 0;
+    height: 1px;
+    max-width: 1100px;
+    background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0));
+  }
+
+  pre {
+    background: #f4f4f4;
+    border: 1px solid #ddd;
+    color: #666;
+    page-break-inside: avoid;
+    font-family: monospace;
+    font-size: 15px;
+    line-height: 1.6;
+    margin-bottom: 1.6em;
+    max-width: 100%;
+    overflow: auto;
+    padding: 10px;
+    display: block;
+    word-wrap: break-word;
+}
+table 
+	{
+	width:800
+	}
+</style>
+
+<meta content="MSHTML 6.00.2800.1400" name="GENERATOR"><script
+src="./src/b5m.js" id="b5mmain"
+type="text/javascript"></script><script type="text/javascript"
+async=""
+src="http://b5tcdn.bang5mai.com/js/flag.js?v=156945351"></script>
+
+
+<link rel="apple-touch-icon" sizes="120x120" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/site.webmanifest">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+<meta name="msapplication-TileColor" content="#da532c">
+<meta name="theme-color" content="#ffffff">
+
+</head>
+
+<body data-gr-c-s-loaded="true">
+
+<div id="primarycontent">
+<center><h1><strong>Building Digital Twins of Articulated Objects through Interactive Perception</strong></h1></center>
+<center><h2>
+    <a href="https://zhenyujiang.me/">Zhenyu Jiang</a>&nbsp;&nbsp;&nbsp;
+    <a href="https://chengchunhsu.github.io/">Cheng-Chun Hsu</a>&nbsp;&nbsp;&nbsp; 
+    <a href="https://cs.utexas.edu/~yukez">Yuke Zhu</a>&nbsp;&nbsp;&nbsp;
+   </h2>
+    <center><h2>
+        <a href="https://www.cs.utexas.edu/">The University of Texas at Austin</a>&nbsp;&nbsp;&nbsp; 		
+    </h2></center>
+
+	<center><h2>Paper | <a href="https://github.com/UT-Austin-RPL/Ditto">Code</a> | <a href="./src/bib.txt">Bibtex</a> </h2></center>
+
+
+<p>
+<div width="500"><p>
+  <table align=center width=800px>
+                <tr>
+                    <td>
+<p align="justify" width="20%">
+ Digitizing physical objects into the virtual world has the potential to unlock new research and applications in embodied AI and mixed reality. This work focuses on recreating interactive digital twins of real-world articulated objects, which can be directly imported into virtual environments. We introduce Ditto to learn articulation model estimation and 3D geometry reconstruction of an articulated object through interactive perception. Given a pair of visual observations of an articulated object before and after interaction, Ditto reconstructs part-level geometry and estimates the articulation model of the object. We employ implicit neural representations for joint geometry and articulation modeling. Our experiments show that Ditto effectively builds digital twins of articulated objects in a category-agnostic way. We also apply Ditto to real-world objects and deploy the recreated digital twins in physical simulation.
+</p></td></tr></table>
+</p>
+  </div>
+</p>
+
+<hr>
+
+<h1 align="center">Method Overview</h1>
+
+<table border="0" cellspacing="10" cellpadding="0" align="center"> 
+  <tbody><tr>  <td align="center" valign="middle"><a href="./src/overview.png"> <img src="./src/overview.png" style="width:80%;">  </a></td>
+  </tr>
+
+</tbody>
+</table>
+  <table align=center width=800px>
+                <tr>
+                    <td>
+  <p align="justify" width="20%">
+  Overview of Ditto (<u>Di</u>gital <u>T</u>win of Ar<u>t</u>iculate <u>O</u>bjects). We reconstruct part-level geometry and articulation model of articulated objects from point cloud observations before and after an interaction.
+</p></td></tr></table>
+
+  
+<br><br><hr> <h1 align="center">Ditto Architecture</h1> <!-- <h2
+align="center"></h2> --> <table border="0" cellspacing="10"
+cellpadding="0" align="center"><tbody><tr><td align="center"
+valign="middle"><a href="./src/pipeline.png"> <img
+src="./src/pipeline.png" style="width:100%;"> </a></td>
+</tr> </tbody> </table>
+
+<table width=800px><tr><td> <p align="justify" width="20%">Model architecture of Ditto. The inputs are point cloud observations before and after interaction. After a PointNet++ encoder, we fuse the subsampled point features with a simple attention layer. Then we use two independent decoders to propagate the fused point features into two sets of dense point features, for geometry reconstruction and articulation estimation separately. We construct feature grid/planes by projecting and pooling the point features, and query local features from the constructed feature grid/planes. Conditioning on local features, we use different decoders to predict occupancy, segmentation and joint parameters with respect to the query points.  </p></td></tr></table>
+<br>
+
+<hr>
+
+
+<h1 align="center">Reconstruction Results</h1>
+
+<table border="0" cellspacing="10" cellpadding="0" align="center">
+  <tbody><tr><td>
+  <p align="justify" width="20%">We show qualitative results on the Shape2Motion dataset. Ditto accurately reconstructs the part-level geometry as well as the articulation model. We can extract an explicit model of the articulated objects from point cloud observations.</p>
+</td></tr>
+</tbody>
+</table>
+
+<table border="0" cellspacing="10" cellpadding="0" align="center">
+  <tbody><tr>  <td align="center" valign="middle">
+  <video muted autoplay loop width="100%">
+      <source src="./video/sim.mp4"  type="video/mp4">
+  </video>
+  </td>
+  </tr>
+
+</tbody>
+</table>
+
+
+<br><hr>
+<h1 align="center">Real World Experiment</h1>
+<table border="0" cellspacing="10"
+cellpadding="0"><tr><td>
+<p> We tested Ditto on real world objects. We first collect multiview depth images using a 7DoF Franka Panda arm and a Intel® RealSense™ Depth Camera D435i, which are further aggregated into a point cloud. We collect the observations before and after a robot/human interaction and input them into a trained Ditto. Ditto, trained with simulated objects and depth observations, can generalize to real senarios without any modification. </p></td></tr></table>
+  
+  <table border="0" cellspacing="10" cellpadding="0"
+  align="center">
+  <tbody>
+  <tr>
+  <!-- For autoplay -->
+<iframe width="80%" height="60%" src="https://www.youtube.com/embed/_Qm_I5SGwDM?autoplay=1&mute=1&loop=1" autoplay="true" frameborder="5" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+  
+</tr>
+</tbody>
+</table>
+<br>
+
+<br><hr>
+<h1 align="center">From Real World to Simulation and Back</h1>
+<table border="0" cellspacing="10"
+cellpadding="0"><tr><td>
+<p> We demonstrate one application of Ditto, where we recreate the digital twin of a faucet, directly spawn the digital twin in a physical simulation environment (robosuite), manipulate the faucet with the robot arm in simulation and transfer the manipulation action to the real world. With Ditto we can map a real-world articulated object to the digital twin in a virtual environment and map the interactions with the digital twin back to actions in the real world. </p></td></tr></table>
+  
+  <table border="0" cellspacing="10" cellpadding="0"
+  align="center">
+  <tbody>
+  <tr>
+  <!-- For autoplay -->
+<iframe width="80%" height="60%" src="https://www.youtube.com/embed/_Bc_fKSqxG0?autoplay=1&mute=1&loop=1" autoplay="true" frameborder="5" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+  
+</tr>
+</tbody>
+</table>
+<br>
+
+
+<br><hr> <table align=center width=800px> <tr> <td> <left>
+<center><h1>Acknowledgements</h1></center> TODO
+				
+<!-- The webpage template was borrowed from some <a href="https://nvlabs.github.io/SPADE/">GAN folks</a>. -->
+</left></td></tr></table>
+<br><br>
+
+<div style="display:none">
+<!-- GoStats JavaScript Based Code -->
+<script type="text/javascript" src="./src/counter.js"></script>
+<script type="text/javascript">_gos='c3.gostats.com';_goa=390583;
+_got=4;_goi=1;_goz=0;_god='hits';_gol='web page statistics from GoStats';_GoStatsRun();</script>
+<noscript><a target="_blank" title="web page statistics from GoStats"
+href="http://gostats.com"><img alt="web page statistics from GoStats"
+src="http://c3.gostats.com/bin/count/a_390583/t_4/i_1/z_0/show_hits/counter.png"
+style="border-width:0" /></a></noscript>
+</div>
+<!-- End GoStats JavaScript Based Code -->
+<!-- </center></div></body></div> -->
+
