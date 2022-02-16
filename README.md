@@ -65,3 +65,11 @@ Pre-trained models: [Shape2Motion dataset](https://utexas.box.com/s/ktckf75xo33p
 2. We use [ConvONets](https://github.com/autonomousvision/convolutional_occupancy_networks) as our backbone.
 
 ## Citing
+```
+@inproceedings{jiang2022ditto,
+   title={Ditto: Building Digital Twins of Articulated Objects from Interaction},
+   author={Jiang, Zhenyu and Hsu, Cheng-Chun and Zhu, Yuke},
+   booktitle={arXiv preprint arXiv:2202.XXXXX},
+   year={2022}
+}
+```
