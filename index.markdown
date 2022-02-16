@@ -239,7 +239,12 @@ cellpadding="0"><tr><td>
                   <td>
                   <left>
 <pre><code style="display:block; overflow-x: auto">
-    TODO
+@inproceedings{jiang2022ditto,
+   title={Ditto: Building Digital Twins of Articulated Objects from Interaction},
+   author={Jiang, Zhenyu and Hsu, Cheng-Chun and Zhu, Yuke},
+   booktitle={arXiv preprint arXiv:2202.XXXXX},
+   year={2022}
+}
 </code></pre>
 </left></td></tr></table>
 
