@@ -40,21 +40,21 @@ datamodule:
       batch_size: 8
       num_point: 8192
       data_path:
-        - Shape2Motion/laptop_fcgf_train_1K
-        - Shape2Motion/oven_fcgf_train_1K
-        - Shape2Motion/faucet_fcgf_train_1K
-        - Shape2Motion/cabinet_fcgf_train_1K
+        - Shape2Motion/laptop_train_1K
+        - Shape2Motion/oven_train_1K
+        - Shape2Motion/faucet_train_1K
+        - Shape2Motion/cabinet_train_1K
     val:
       num_point: 8192
       data_path:
-        - Shape2Motion/laptop_fcgf_val_50
-        - Shape2Motion/oven_fcgf_val_50
-        - Shape2Motion/faucet_fcgf_val_50
-        - Shape2Motion/cabinet_fcgf_val_50
+        - Shape2Motion/laptop_val_50
+        - Shape2Motion/oven_val_50
+        - Shape2Motion/faucet_val_50
+        - Shape2Motion/cabinet_val_50
     test:
       num_point: 8192
       data_path:
-        - Shape2Motion/laptop_fcgf_test_standard
-        - Shape2Motion/oven_fcgf_test_standard
-        - Shape2Motion/faucet_fcgf_test_standard
-        - Shape2Motion/cabinet_fcgf_test_standard
+        - Shape2Motion/laptop_test_standard
+        - Shape2Motion/oven_test_standard
+        - Shape2Motion/faucet_test_standard
+        - Shape2Motion/cabinet_test_standard

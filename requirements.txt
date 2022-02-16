@@ -1,6 +1,7 @@
 # --------- pytorch --------- #
 pytorch-lightning==1.5.4
 torchmetrics==0.4.1
+setuptools==59.5.0
 
 # --------- hydra --------- #
 hydra-core==1.1.0.rc1
