@@ -103,7 +103,7 @@ src="http://b5tcdn.bang5mai.com/js/flag.js?v=156945351"></script>
 <body data-gr-c-s-loaded="true">
 
 <div id="primarycontent">
-<center><h1><strong>Ditto <img width="50" style='display:inline;' src="./src/ditto.png"/> <br>Building Digital Twins of Articulated Objects <br> through Interactive Perception</strong></h1></center>
+<center><h1><strong>Ditto <img width="50" style='display:inline;' src="./src/ditto.png"/> <br>Building Digital Twins of Articulated Objects from Interaction</strong></h1></center>
 <center><h2>
     <a href="https://zhenyujiang.me/">Zhenyu Jiang</a>&nbsp;&nbsp;&nbsp;
     <a href="https://chengchunhsu.github.io/">Cheng-Chun Hsu</a>&nbsp;&nbsp;&nbsp; 
@@ -113,7 +113,7 @@ src="http://b5tcdn.bang5mai.com/js/flag.js?v=156945351"></script>
         <a href="https://www.cs.utexas.edu/">The University of Texas at Austin</a>&nbsp;&nbsp;&nbsp; 		
     </h2></center>
 
-	<center><h2>Paper | <a href="https://github.com/UT-Austin-RPL/Ditto">Code</a> | <a href="./src/bib.txt">Bibtex</a> </h2></center>
+	<center><h2>Paper | <a href="https://github.com/UT-Austin-RPL/Ditto">Code</a> </h2></center>
 
 
 <p>
@@ -229,12 +229,26 @@ cellpadding="0"><tr><td>
 <br>
 
 
-<br><hr> <table align=center width=800px> <tr> <td> <left>
-<center><h1>Acknowledgements</h1></center> We would like to thank Yifeng Zhu for help on real robot experiments. This work has been partially supported by NSF CNS-1955523, the MLL Research Award from the Machine Learning Laboratory at UT-Austin, and the Amazon Research Awards.
-				
-<!-- The webpage template was borrowed from some <a href="https://nvlabs.github.io/SPADE/">GAN folks</a>. -->
+
+<hr>
+<!-- <table align=center width=800px> <tr> <td> <left> -->
+<center><h1>Citation</h1></center>
+
+<table align=center width=800px>
+              <tr>
+                  <td>
+                  <left>
+<pre><code style="display:block; overflow-x: auto">
+    TODO
+</code></pre>
 </left></td></tr></table>
-<br><br>
+
+<!-- <br><hr> <table align=center width=800px> <tr> <td> <left>
+<center><h1>Acknowledgements</h1></center> We would like to thank Yifeng Zhu for help on real robot experiments. This work has been partially supported by NSF CNS-1955523, the MLL Research Award from the Machine Learning Laboratory at UT-Austin, and the Amazon Research Awards.
+ -->
+
+<!-- </left></td></tr></table>
+<br><br> -->
 
 <div style="display:none">
 <!-- GoStats JavaScript Based Code -->
