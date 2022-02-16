@@ -1,14 +1,9 @@
 # import multiprocessing
-import torch
-
-try:
-    # from src.third_party.ConvONets.utils.libkdtree import KDTree
-    from pykdtree.kdtree import KDTree
-except:
-    print("import libkdtree fail")
 import math
 
 import numpy as np
+import torch
+from pykdtree.kdtree import KDTree
 
 
 def compute_iou(occ1, occ2):
