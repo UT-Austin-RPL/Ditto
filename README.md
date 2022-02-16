@@ -60,7 +60,7 @@ Pre-trained models: [Shape2Motion dataset](https://utexas.box.com/s/ktckf75xo33p
 
 ## Related Repositories
 
-1. Our code is based on this fantastic template [Lightning-Hydra-Template](https://github.com/ashleve/lightning-hydra-template)
+1. Our code is based on this fantastic template [Lightning-Hydra-Template](https://github.com/ashleve/lightning-hydra-template).
 
 2. We use [ConvONets](https://github.com/autonomousvision/convolutional_occupancy_networks) as our backbone.
 
