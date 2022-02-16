@@ -10,7 +10,7 @@
 ## Introduction
 <ins></ins>Ditto (<ins>Di</ins>gital <ins>T</ins>wins of Ar<ins>t</ins>iculated <ins>O</ins>bjects) is a model that reconstructs part-level geometry and articulation model of an articulated object given observations before and after an interaction. Specifically, we use a PointNet++ encoder to encoder the input point cloud observations, and fuse the subsampled point features with a simple attention layer. Then we use two independent decoders to propagate the fused point features into two sets of dense point features, for geometry reconstruction and articulation estimation separately. We construct feature grid/planes by projecting and pooling the point features, and query local features from the constructed feature grid/planes. Conditioning on local features, we use different decoders to predict occupancy, segmentation and joint parameters with respect to the query points. At then end, we can extract explicit geometry and articulation model from the implicit decoders.
 
-If you find our work useful in your research, please consider [citing](assets/ditto.bib).
+If you find our work useful in your research, please consider [citing](#citing).
 
 ## Installation
 
@@ -60,6 +60,8 @@ Pre-trained models: [Shape2Motion dataset](https://utexas.box.com/s/ktckf75xo33p
 
 ## Related Repositories
 
-1. Our code is based on this fantastic template[Lightning-Hydra-Template](https://github.com/ashleve/lightning-hydra-template)
+1. Our code is based on this fantastic template [Lightning-Hydra-Template](https://github.com/ashleve/lightning-hydra-template)
 
 2. We use [ConvONets](https://github.com/autonomousvision/convolutional_occupancy_networks) as our backbone.
+
+## Citing
