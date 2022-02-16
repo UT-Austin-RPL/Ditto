@@ -5,8 +5,12 @@
 
 [Project](https://ut-austin-rpl.github.io/Ditto/) | arxiv
 
+![intro](assets/pipeline.png)
+
 ## Introduction
 <ins></ins>Ditto (<ins>Di</ins>gital <ins>T</ins>wins of Ar<ins>t</ins>iculated <ins>O</ins>bjects) is a model that reconstructs part-level geometry and articulation model of an articulated object given observations before and after an interaction. Specifically, we use a PointNet++ encoder to encoder the input point cloud observations, and fuse the subsampled point features with a simple attention layer. Then we use two independent decoders to propagate the fused point features into two sets of dense point features, for geometry reconstruction and articulation estimation separately. We construct feature grid/planes by projecting and pooling the point features, and query local features from the constructed feature grid/planes. Conditioning on local features, we use different decoders to predict occupancy, segmentation and joint parameters with respect to the query points. At then end, we can extract explicit geometry and articulation model from the implicit decoders.
+
+If you find our work useful in your research, please consider [citing](assets/ditto.bib).
 
 ## Installation
 
@@ -14,17 +18,13 @@
 
 ```bash
 conda env create -f conda_env_gpu.yaml -n Ditto
-# install torch-scatter
-pip install https://data.pyg.org/whl/torch-1.8.0%2Bcu102/torch_scatter-2.0.8-cp38-cp38-linux_x86_64.whl
-# install other requirements
-pip install -r requirements.txt
 ```
 
-You can change the `pytorch` and `cuda` version in conda_env_gpu.yaml, but remember to install the `torch-scatter` that built with the same versions.
+You can change the `pytorch` and `cuda` version in conda_env_gpu.yaml.
 
 2. Build ConvONets dependents by running `python scripts/convonet_setup.py build_ext --inplace`.
 
-3. Download the [data](#data-and-pre-trained-models), then unzip and place the `data` folder under the repo's root. Pretrained Ditto weights are in `data/models`.
+3. Download the [data](#data-and-pre-trained-models), then unzip the `data.zip` under the repo's root.
 
 ## Training
 
@@ -48,7 +48,7 @@ python run_test.py experiment=Ditto_s2m trainer.resume_from_checkpoint=/path/to/
 
 ## Data and pre-trained models
 
-Data: [here](https://utexas.box.com/s/1wiynn7ql42c3mi1un7ynncfxr86ep22).
+Data: [here](https://utexas.box.com/s/1wiynn7ql42c3mi1un7ynncfxr86ep22). Remeber to cite [Shape2Motion](assets/s2m.bib) and [Abbatematteo *et al.*](assets/syn.bib) as well as [Ditto](assets/ditto.bib) when using these datasets.
 
 Pre-trained models: [Shape2Motion dataset](https://utexas.box.com/s/ktckf75xo33plf5nidyvqz9bn20jwv06), [Synthetic dataset](https://utexas.box.com/s/zbf5bja20n2w6umryb1bcfbbcm3h2ysn).
 
