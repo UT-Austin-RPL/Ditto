@@ -103,7 +103,7 @@ src="http://b5tcdn.bang5mai.com/js/flag.js?v=156945351"></script>
 <body data-gr-c-s-loaded="true">
 
 <div id="primarycontent">
-<center><h1><strong>Building Digital Twins of Articulated Objects through Interactive Perception</strong></h1></center>
+<center><h1><strong>Ditto: Building Digital Twins of Articulated Objects<br>through Interactive Perception</strong></h1></center>
 <center><h2>
     <a href="https://zhenyujiang.me/">Zhenyu Jiang</a>&nbsp;&nbsp;&nbsp;
     <a href="https://chengchunhsu.github.io/">Cheng-Chun Hsu</a>&nbsp;&nbsp;&nbsp; 
@@ -130,19 +130,20 @@ src="http://b5tcdn.bang5mai.com/js/flag.js?v=156945351"></script>
 
 <hr>
 
-<h1 align="center">Method Overview</h1>
+<h1 align="center">Problem Definition</h1>
 
 <table border="0" cellspacing="10" cellpadding="0" align="center"> 
-  <tbody><tr>  <td align="center" valign="middle"><a href="./src/overview.png"> <img src="./src/overview.png" style="width:80%;">  </a></td>
+  <tbody><tr>  <td align="center" valign="middle"><a href="./src/overview.png"> <img src="./src/overview.png" style="width:100%;">  </a></td>
   </tr>
 
 </tbody>
 </table>
+
   <table align=center width=800px>
                 <tr>
                     <td>
   <p align="justify" width="20%">
-  Overview of Ditto (<u>Di</u>gital <u>T</u>win of Ar<u>t</u>iculate <u>O</u>bjects). We reconstruct part-level geometry and articulation model of articulated objects from point cloud observations before and after an interaction.
+  A digital twin is a virtual representation that serves as the real-time digital counterpart of a physical object or process<sup><a href="https://en.wikipedia.org/wiki/Digital_twin">[1]</a></sup>. Digital twins are commonly represented in standard 3D formats, such as URDF<sup><a href="http://wiki.ros.org/urdf">[2]</a></sup>, such that they can be imported into physics engines. In this project, we study the recreation of the digital twin of articulated objects (Ditto) through interactive perception. Ditto is able to reconstruct part-level geometry and articulation model of articulated objects from point cloud observations before and after an interaction. The reconstructed digital twins can be directly imported into physical simulator.
 </p></td></tr></table>
 
   
@@ -153,7 +154,7 @@ valign="middle"><a href="./src/pipeline.png"> <img
 src="./src/pipeline.png" style="width:100%;"> </a></td>
 </tr> </tbody> </table>
 
-<table width=800px><tr><td> <p align="justify" width="20%">Model architecture of Ditto. The inputs are point cloud observations before and after interaction. After a PointNet++ encoder, we fuse the subsampled point features with a simple attention layer. Then we use two independent decoders to propagate the fused point features into two sets of dense point features, for geometry reconstruction and articulation estimation separately. We construct feature grid/planes by projecting and pooling the point features, and query local features from the constructed feature grid/planes. Conditioning on local features, we use different decoders to predict occupancy, segmentation and joint parameters with respect to the query points.  </p></td></tr></table>
+<table width=800px><tr><td> <p align="justify" width="20%">The inputs are point cloud observations before and after interaction. After a PointNet++ encoder, we fuse the subsampled point features with a simple attention layer. Then we use two independent decoders to propagate the fused point features into two sets of dense point features, for geometry reconstruction and articulation estimation separately. We construct feature grid/planes by projecting and pooling the point features, and query local features from the constructed feature grid/planes. Conditioning on local features, we use different decoders to predict occupancy, segmentation and joint parameters with respect to the query points.  </p></td></tr></table>
 <br>
 
 <hr>
@@ -184,19 +185,27 @@ src="./src/pipeline.png" style="width:100%;"> </a></td>
 <h1 align="center">Real World Experiment</h1>
 <table border="0" cellspacing="10"
 cellpadding="0"><tr><td>
-<p> We tested Ditto on real world objects. We first collect multiview depth images using a 7DoF Franka Panda arm and a Intel® RealSense™ Depth Camera D435i, which are further aggregated into a point cloud. We collect the observations before and after a robot/human interaction and input them into a trained Ditto. Ditto, trained with simulated objects and depth observations, can generalize to real senarios without any modification. </p></td></tr></table>
-  
-  <table border="0" cellspacing="10" cellpadding="0"
-  align="center">
+<p> We tested Ditto on real world objects. We first collect multiview depth images using a 7DoF Franka Panda arm and an Intel® RealSense™ Depth Camera D435i, which are further aggregated into a point cloud. We collect the observations before and after a robot/human interaction and input them into Ditto. Ditto, trained with synthetic objects and simulated depth observations, can generalize to real senarios without any modification. </p></td></tr></table>
+
+<table border="0" cellspacing="10" cellpadding="0" align="center">
   <tbody>
   <tr>
-  <!-- For autoplay -->
-<iframe width="80%" height="60%" src="https://www.youtube.com/embed/_Qm_I5SGwDM?autoplay=1&mute=1&loop=1" autoplay="true" frameborder="5" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-  
-</tr>
+    <td align="center" valign="middle">
+      <video muted autoplay width="94%">
+        <source src="./video/real.mp4"  type="video/mp4">
+      </video>
+    </td>
+  </tr>
+  </tbody>
+</table>
+
+<table border="0" cellspacing="10" cellpadding="0" align="center"> 
+  <tbody><tr>  <td align="center" valign="middle"><a href="./src/real.png"> <img src="./src/real.png" style="width:100%;">  </a></td>
+  </tr>
+
 </tbody>
 </table>
-<br>
+
 
 <br><hr>
 <h1 align="center">From Real World to Simulation and Back</h1>
@@ -204,21 +213,24 @@ cellpadding="0"><tr><td>
 cellpadding="0"><tr><td>
 <p> We demonstrate one application of Ditto, where we recreate the digital twin of a faucet, directly spawn the digital twin in a physical simulation environment (robosuite), manipulate the faucet with the robot arm in simulation and transfer the manipulation action to the real world. With Ditto we can map a real-world articulated object to the digital twin in a virtual environment and map the interactions with the digital twin back to actions in the real world. </p></td></tr></table>
   
-  <table border="0" cellspacing="10" cellpadding="0"
-  align="center">
+
+<table border="0" cellspacing="10" cellpadding="0" align="center">
   <tbody>
   <tr>
-  <!-- For autoplay -->
-<iframe width="80%" height="60%" src="https://www.youtube.com/embed/_Bc_fKSqxG0?autoplay=1&mute=1&loop=1" autoplay="true" frameborder="5" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-  
-</tr>
-</tbody>
+    <td align="center" valign="middle">
+      <video muted autoplay width="100%">
+        <source src="./video/real2sim.mp4"  type="video/mp4">
+      </video>
+    </td>
+  </tr>
+  </tbody>
 </table>
+
 <br>
 
 
 <br><hr> <table align=center width=800px> <tr> <td> <left>
-<center><h1>Acknowledgements</h1></center> TODO
+<center><h1>Acknowledgements</h1></center> We would like to thank Yifeng Zhu for help on real robot experiments. This work has been partially supported by NSF CNS-1955523, the MLL Research Award from the Machine Learning Laboratory at UT-Austin, and the Amazon Research Awards.
 				
 <!-- The webpage template was borrowed from some <a href="https://nvlabs.github.io/SPADE/">GAN folks</a>. -->
 </left></td></tr></table>
