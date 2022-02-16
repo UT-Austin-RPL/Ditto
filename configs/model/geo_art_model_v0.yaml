@@ -37,5 +37,3 @@ opt:
     test_occ_th: 0.5
     test_seg_th: 0.5
     test_res: 32
-    eval_mesh: True
-    eval_auto_switch: False

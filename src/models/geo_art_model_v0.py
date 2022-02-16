@@ -102,6 +102,9 @@ class GeoArtModelV0(pl.LightningModule):
         if data["joint_type"].sum() == 0:
             # revolute only
             loss_joint_param = loss_revolute.mean()
+        elif data["joint_type"].mean() == 1:
+            # prismatic only
+            loss_joint_param = loss_prismatic.mean()
         else:
             mask_reg = F.one_hot(data["joint_type"].long(), num_classes=2)
             loss_joint_param = (
@@ -269,136 +272,63 @@ class GeoArtModelV0(pl.LightningModule):
 
         # only support batch size 1
         assert data["pc_start"].size(0) == 1
-        switched = False
-        if self.hparams.eval_auto_switch:
-            # choose state with large change as reference
-            if data["state_start"].abs().item() < data["state_end"].abs().item():
-                data["pc_start"], data["pc_end"] = (
-                    data["pc_end"],
-                    data["pc_start"],
-                )
-                data["state_start"], data["state_end"] = (
-                    data["state_end"],
-                    data["state_start"],
-                )
-                mesh_pose_dict = np.load(data["data_path"][0], allow_pickle=True)[
-                    "end_mesh_pose_dict"
-                ].item()
-                switched = True
-            else:
-                mesh_pose_dict = np.load(data["data_path"][0], allow_pickle=True)[
-                    "start_mesh_pose_dict"
-                ].item()
-        else:
-            mesh_pose_dict = np.load(data["data_path"][0], allow_pickle=True)[
-                "start_mesh_pose_dict"
-            ].item()
-        if self.hparams.eval_mesh:
-            if not hasattr(self, "generator"):
-                self.generator = Generator3D(
-                    self.model,
-                    device=self.device,
-                    threshold=self.hparams.test_occ_th,
-                    seg_threshold=self.hparams.test_seg_th,
-                    input_type="pointcloud",
-                    refinement_step=0,
-                    padding=0.1,
-                    resolution0=self.hparams.test_res,
-                )
 
-            # evaluate mesh
-            mesh_dict, mobile_points_all, c, _ = self.generator.generate_mesh(data)
+        mesh_pose_dict = np.load(data["data_path"][0], allow_pickle=True)[
+            "start_mesh_pose_dict"
+        ].item()
 
-            gt_mesh_dict = get_gt_mesh_from_data(data, mesh_pose_dict)
-
-            cd_whole = (
-                compute_trimesh_chamfer(
-                    as_mesh(trimesh.Scene(mesh_dict.values())),
-                    as_mesh(trimesh.Scene(gt_mesh_dict.values())),
-                    0,
-                    1,
-                )
-                * 1000
+        if not hasattr(self, "generator"):
+            self.generator = Generator3D(
+                self.model,
+                device=self.device,
+                threshold=self.hparams.test_occ_th,
+                seg_threshold=self.hparams.test_seg_th,
+                input_type="pointcloud",
+                refinement_step=0,
+                padding=0.1,
+                resolution0=self.hparams.test_res,
             )
-            cd_mobile = (
-                compute_trimesh_chamfer(mesh_dict[1], gt_mesh_dict[1], 0, 1) * 1000
-            )
-            cd_static = (
-                compute_trimesh_chamfer(mesh_dict[0], gt_mesh_dict[0], 0, 1) * 1000
-            )
-            if np.isnan(cd_mobile) or np.isnan(cd_static):
-                write_urdf = False
-            else:
-                write_urdf = True
-                static_part_simp = mesh_dict[0].simplify_quadratic_decimation(10000)
-                mobile_part_simp = mesh_dict[1].simplify_quadratic_decimation(10000)
-                mobile_part_simp.visual.face_colors += np.array(
-                    [0, 102, 0, 0], dtype=np.uint8
-                )
-                _ = static_part_simp.export(os.path.join(save_dir, "static.obj"))
-                _ = mobile_part_simp.export(os.path.join(save_dir, "mobile.obj"))
 
-                bounds = as_mesh(trimesh.Scene(mesh_dict.values())).bounds
-                bbox_dict = {"min": list(bounds[0]), "max": list(bounds[1])}
-                with open(os.path.join(save_dir, "bounding_box.json"), "w") as f:
-                    json.dump(bbox_dict, f)
+        # evaluate mesh
+        mesh_dict, mobile_points_all, c, _ = self.generator.generate_mesh(data)
 
-        else:
-            cd_whole = 0.0
-            cd_mobile = 0.0
-            cd_static = 0.0
+        gt_mesh_dict = get_gt_mesh_from_data(data, mesh_pose_dict)
+
+        cd_whole = (
+            compute_trimesh_chamfer(
+                as_mesh(trimesh.Scene(mesh_dict.values())),
+                as_mesh(trimesh.Scene(gt_mesh_dict.values())),
+                0,
+                1,
+            )
+            * 1000
+        )
+        cd_mobile = compute_trimesh_chamfer(mesh_dict[1], gt_mesh_dict[1], 0, 1) * 1000
+
+        if np.isnan(cd_mobile) or np.isnan(cd_whole):
             write_urdf = False
+        else:
+            write_urdf = True
+            static_part_simp = mesh_dict[0].simplify_quadratic_decimation(10000)
+            mobile_part_simp = mesh_dict[1].simplify_quadratic_decimation(10000)
+            mobile_part_simp.visual.face_colors = np.array(
+                [84, 220, 83, 255], dtype=np.uint8
+            )
+            _ = static_part_simp.export(os.path.join(save_dir, "static.obj"))
+            _ = mobile_part_simp.export(os.path.join(save_dir, "mobile.obj"))
+
+            bounds = as_mesh(trimesh.Scene(mesh_dict.values())).bounds
+            bbox_dict = {"min": list(bounds[0]), "max": list(bounds[1])}
+            with open(os.path.join(save_dir, "bounding_box.json"), "w") as f:
+                json.dump(bbox_dict, f)
+
         c = self.model.encode_inputs(data["pc_start"], data["pc_end"])
         mobile_points_all = data["p_seg"][data["seg_label"].bool()].unsqueeze(0)
         mesh_dict = None
 
-        logits_occ = self.model.decode_occ(data["p_occ"], c)
-        logits_seg = self.model.decode_seg(data["p_seg"], c)
-
-        # evaluate mobile_iou
-        occ_pred = torch.sigmoid(logits_occ) > self.hparams.test_occ_th
-        logits_seg_pred = self.model.decode_seg(data["p_occ"], c)
-        mobile_pred = torch.sigmoid(logits_seg_pred) > self.hparams.test_seg_th
-        seg_pred_full = torch.logical_and(mobile_pred, occ_pred)
-
-        seg_label_full = data["seg_label_full"].bool()
-        mobile_iou = (
-            torch.logical_and(seg_pred_full, seg_label_full).sum().float()
-            / torch.logical_or(seg_pred_full, seg_label_full).sum().float()
-        )
-
-        # geo evaluation: iou
-        prob_occ = torch.sigmoid(logits_occ)
-        prob_seg = torch.sigmoid(logits_seg)
-
-        self.occ_pr_meter.update(prob_occ, data["occ_label"].long())
-        self.occ_rc_meter.update(prob_occ, data["occ_label"].long())
-        self.seg_pr_meter.update(prob_seg, data["seg_label"].long())
-        self.seg_rc_meter.update(prob_seg, data["seg_label"].long())
-
-        occ_and = torch.logical_and(
-            (prob_occ > self.hparams.test_occ_th), data["occ_label"].bool()
-        )
-        occ_or = torch.logical_or(
-            (prob_occ > self.hparams.test_occ_th), data["occ_label"].bool()
-        )
-        occ_iou = occ_and.float().sum(-1) / occ_or.float().sum(-1)
-
-        seg_and = torch.logical_and(
-            (prob_seg > self.hparams.test_seg_th), data["seg_label"].bool()
-        )
-        seg_or = torch.logical_or(
-            (prob_seg > self.hparams.test_seg_th), data["seg_label"].bool()
-        )
-        seg_iou = seg_and.float().sum(-1) / seg_or.float().sum(-1)
-
         result = {
             "geo": {
-                "occ_iou": occ_iou.item(),
-                "seg_iou": seg_iou.item(),
-                "mobile_iou": mobile_iou.item(),
                 "cd_whole": cd_whole,
-                "cd_static": cd_static,
                 "cd_mobile": cd_mobile,
             },
         }
@@ -483,41 +413,41 @@ class GeoArtModelV0(pl.LightningModule):
                 "joint_type": {"accuracy": correct},
             }
 
-        if self.hparams.eval_mesh:
-            if write_urdf:
-                root_dir = os.path.abspath(
-                    os.path.join(
-                        __file__,
-                        os.path.pardir,
-                        os.path.pardir,
-                        os.path.pardir,
-                    )
+        # write result URDF
+        if write_urdf:
+            root_dir = os.path.abspath(
+                os.path.join(
+                    __file__,
+                    os.path.pardir,
+                    os.path.pardir,
+                    os.path.pardir,
                 )
-                with open(os.path.join(root_dir, "template.urdf")) as f:
-                    urdf_txt = f.read()
+            )
+            with open(os.path.join(root_dir, "template.urdf")) as f:
+                urdf_txt = f.read()
 
-                if joint_type_prob.item() < 0.5:
-                    joint_type = "revolute"
-                else:
-                    joint_type = "prismatic"
-                urdf_txt = urdf_txt.replace("joint_type", joint_type)
+            if joint_type_prob.item() < 0.5:
+                joint_type = "revolute"
+            else:
+                joint_type = "prismatic"
+            urdf_txt = urdf_txt.replace("joint_type", joint_type)
 
-                joint_position_r_txt = " ".join([str(x) for x in -pivot_point_pred])
-                urdf_txt = urdf_txt.replace("joint_position_r", joint_position_r_txt)
+            joint_position_r_txt = " ".join([str(x) for x in -pivot_point_pred])
+            urdf_txt = urdf_txt.replace("joint_position_r", joint_position_r_txt)
 
-                joint_position_txt = " ".join([str(x) for x in pivot_point_pred])
-                urdf_txt = urdf_txt.replace("joint_position", joint_position_txt)
+            joint_position_txt = " ".join([str(x) for x in pivot_point_pred])
+            urdf_txt = urdf_txt.replace("joint_position", joint_position_txt)
 
-                joint_axis_txt = " ".join([str(x) for x in joint_axis_pred])
-                urdf_txt = urdf_txt.replace("joint_axis", joint_axis_txt)
-                if config_pred > 0:
-                    urdf_txt = urdf_txt.replace("joint_state_lower", "0.0")
-                    urdf_txt = urdf_txt.replace("joint_state_upper", str(config_pred))
-                else:
-                    urdf_txt = urdf_txt.replace("joint_state_upper", "0.0")
-                    urdf_txt = urdf_txt.replace("joint_state_lower", str(config_pred))
-                with open(os.path.join(save_dir, "out.urdf"), "w") as f:
-                    f.write(urdf_txt)
+            joint_axis_txt = " ".join([str(x) for x in joint_axis_pred])
+            urdf_txt = urdf_txt.replace("joint_axis", joint_axis_txt)
+            if config_pred > 0:
+                urdf_txt = urdf_txt.replace("joint_state_lower", "0.0")
+                urdf_txt = urdf_txt.replace("joint_state_upper", str(config_pred))
+            else:
+                urdf_txt = urdf_txt.replace("joint_state_upper", "0.0")
+                urdf_txt = urdf_txt.replace("joint_state_lower", str(config_pred))
+            with open(os.path.join(save_dir, "out.urdf"), "w") as f:
+                f.write(urdf_txt)
 
         object_data = (
             {
@@ -531,7 +461,6 @@ class GeoArtModelV0(pl.LightningModule):
             },
         )
         output = {
-            "switched": switched,
             "joint_axis": joint_axis_pred,
             "pivot_point": pivot_point_pred,
             "config": config_pred,
@@ -549,11 +478,7 @@ class GeoArtModelV0(pl.LightningModule):
         # outputs = self.all_gather(outputs)
         results_all = {
             "geo": {
-                "occ_iou": [],
-                "seg_iou": [],
-                "mobile_iou": [],
                 "cd_whole": [],
-                "cd_static": [],
                 "cd_mobile": [],
             },
             "articulation": {
@@ -584,17 +509,12 @@ class GeoArtModelV0(pl.LightningModule):
             tmp = np.array(v).reshape(-1)
             tmp = np.mean([x for x in tmp if not np.isnan(x)])
             results_mean["geo"][k] = float(tmp)
-            # print(f'{k}: {np.mean(v)}')
+
         for k, v in results_all["articulation"].items():
             for k2, v2 in v.items():
                 tmp = np.array(v2).reshape(-1)
                 tmp = np.mean([x for x in tmp if not np.isnan(x)])
                 results_mean["articulation"][k][k2] = float(tmp)
-                # print(f'{k2}: {np.mean(v2)}')
-        results_mean["geo"]["occ_pr"] = self.occ_pr_meter.compute().item()
-        results_mean["geo"]["occ_rc"] = self.occ_rc_meter.compute().item()
-        results_mean["geo"]["seg_pr"] = self.seg_pr_meter.compute().item()
-        results_mean["geo"]["seg_rc"] = self.seg_rc_meter.compute().item()
 
         if self.trainer.is_global_zero:
             pprint(results_mean)
