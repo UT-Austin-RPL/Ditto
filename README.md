@@ -1,4 +1,4 @@
-# Ditto: Building Digital Twins of Articulated Objects <br> through Interactive Perception
+# Ditto: Building Digital Twins of Articulated Objects from Interaction
 
 [Zhenyu Jiang](http://zhenyujiang.me), [Cheng-Chun Hsu](https://chengchunhsu.github.io/), [Yuke Zhu](https://www.cs.utexas.edu/~yukez/)
 
