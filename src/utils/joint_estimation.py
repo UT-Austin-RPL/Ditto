@@ -11,7 +11,16 @@ def norm(a, axis=-1):
 def eval_joint_r(pred, gt):
     pred_axis, pred_pivot_point, pred_angle = pred
     gt_axis, gt_pivot_point, gt_angle = gt
-    axis_ori = np.arccos(np.dot(pred_axis, gt_axis))
+    # add ambiguity
+    axis_ori_1 = np.arccos(np.dot(pred_axis, gt_axis))
+    axis_ori_2 = np.arccos(np.dot(-pred_axis, gt_axis))
+    if axis_ori_1 < axis_ori_2:
+        axis_ori = axis_ori_1
+        config = np.abs(gt_angle - pred_angle) * 180 / np.pi
+    else:
+        axis_ori = axis_ori_2
+        config = np.abs(gt_angle + pred_angle) * 180 / np.pi
+
     pred_moment = np.cross(pred_pivot_point, pred_axis)
     gt_moment = np.cross(gt_pivot_point, gt_axis)
 
@@ -22,7 +31,6 @@ def eval_joint_r(pred, gt):
         dist = np.abs(gt_axis.dot(pred_moment) + pred_axis.dot(gt_moment)) / norm(
             np.cross(gt_axis, pred_axis)
         )
-    config = np.abs(gt_angle - pred_angle) * 180 / np.pi
     axis_ori = axis_ori * 180 / np.pi
 
     return axis_ori, dist, config
@@ -31,8 +39,15 @@ def eval_joint_r(pred, gt):
 def eval_joint_p(pred, gt):
     pred_axis, pred_d = pred
     gt_axis, gt_d = gt
-    axis_ori = np.arccos(np.dot(pred_axis, gt_axis))
-    config_err = np.abs(gt_d - pred_d)
+    # add ambiguity
+    axis_ori_1 = np.arccos(np.dot(pred_axis, gt_axis))
+    axis_ori_2 = np.arccos(np.dot(-pred_axis, gt_axis))
+    if axis_ori_1 < axis_ori_2:
+        axis_ori = axis_ori_1
+        config_err = np.abs(gt_d - pred_d)
+    else:
+        axis_ori = axis_ori_2
+        config_err = np.abs(gt_d + pred_d)
     return axis_ori, config_err
 
 

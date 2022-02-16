@@ -40,21 +40,21 @@ datamodule:
       batch_size: 8
       num_point: 8192
       data_path:
-        - syn/cabinet2_rand_fcgf_train_1K
-        - syn/drawer_fcgf_train_1K
-        - syn/microwave_fcgf_train_1K
-        - syn/toaster_fcgf_train_1K
+        - syn/cabinet2_rand_train_1K
+        - syn/drawer_train_1K
+        - syn/microwave_train_1K
+        - syn/toaster_train_1K
     val:
       num_point: 8192
       data_path:
-        - syn/cabinet2_rand_fcgf_val_50
-        - syn/drawer_fcgf_val_50
-        - syn/microwave_fcgf_val_50
-        - syn/toaster_fcgf_val_50
+        - syn/cabinet2_rand_val_50
+        - syn/drawer_val_50
+        - syn/microwave_val_50
+        - syn/toaster_val_50
     test:
       num_point: 8192
       data_path:
-        - syn/cabinet2_rand_fcgf_test_standard
-        - syn/drawer_fcgf_test_standard
-        - syn/microwave_fcgf_test_standard
-        - syn/toaster_fcgf_test_standard
+        - syn/cabinet2_rand_test_standard
+        - syn/drawer_test_standard
+        - syn/microwave_test_standard
+        - syn/toaster_test_standard
