@@ -48,7 +48,7 @@ python run_test.py experiment=Ditto_s2m trainer.resume_from_checkpoint=/path/to/
 
 ## Data and pre-trained models
 
-Data: [here](https://utexas.box.com/s/1wiynn7ql42c3mi1un7ynncfxr86ep22). Remeber to cite [Shape2Motion](assets/s2m.bib) and [Abbatematteo *et al.*](assets/syn.bib) as well as [Ditto](assets/ditto.bib) when using these datasets.
+Data: [here](https://utexas.box.com/s/1wiynn7ql42c3mi1un7ynncfxr86ep22). Remeber to cite [Shape2Motion](assets/s2m.bib) and [Abbatematteo *et al.*](#citing) as well as [Ditto](assets/ditto.bib) when using these datasets.
 
 Pre-trained models: [Shape2Motion dataset](https://utexas.box.com/s/ktckf75xo33plf5nidyvqz9bn20jwv06), [Synthetic dataset](https://utexas.box.com/s/zbf5bja20n2w6umryb1bcfbbcm3h2ysn).
 
