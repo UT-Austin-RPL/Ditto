@@ -114,7 +114,7 @@ src="http://b5tcdn.bang5mai.com/js/flag.js?v=156945351"></script>
         <a href="https://www.cs.utexas.edu/">The University of Texas at Austin</a>&nbsp;&nbsp;&nbsp; 		
     </h2></center>
 
-	<center><h2>Paper | <a href="https://github.com/UT-Austin-RPL/Ditto">Code</a> </h2></center>
+	<center><h2><a href="https://arxiv.org/abs/2202.08227">Paper</a> | <a href="https://github.com/UT-Austin-RPL/Ditto">Code</a> </h2></center>
 
 
 <p>
@@ -255,7 +255,7 @@ cellpadding="0"><tr><td>
 @inproceedings{jiang2022ditto,
    title={Ditto: Building Digital Twins of Articulated Objects from Interaction},
    author={Jiang, Zhenyu and Hsu, Cheng-Chun and Zhu, Yuke},
-   booktitle={arXiv preprint arXiv:2202.XXXXX},
+   booktitle={arXiv preprint arXiv:2202.08227},
    year={2022}
 }
 </code></pre>
