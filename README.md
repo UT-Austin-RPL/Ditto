@@ -69,7 +69,7 @@ Pre-trained models: [Shape2Motion dataset](https://utexas.box.com/s/ktckf75xo33p
 @inproceedings{jiang2022ditto,
    title={Ditto: Building Digital Twins of Articulated Objects from Interaction},
    author={Jiang, Zhenyu and Hsu, Cheng-Chun and Zhu, Yuke},
-   booktitle={arXiv preprint arXiv:2202.XXXXX},
+   booktitle={arXiv preprint arXiv:2202.08227},
    year={2022}
 }
 ```
