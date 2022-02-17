@@ -269,15 +269,14 @@ cellpadding="0"><tr><td>
 <br><br> -->
 
 <div style="display:none">
-<!-- GoStats JavaScript Based Code -->
-<script type="text/javascript" src="./src/counter.js"></script>
-<script type="text/javascript">_gos='c3.gostats.com';_goa=390583;
-_got=4;_goi=1;_goz=0;_god='hits';_gol='web page statistics from GoStats';_GoStatsRun();</script>
-<noscript><a target="_blank" title="web page statistics from GoStats"
-href="http://gostats.com"><img alt="web page statistics from GoStats"
-src="http://c3.gostats.com/bin/count/a_390583/t_4/i_1/z_0/show_hits/counter.png"
-style="border-width:0" /></a></noscript>
-</div>
-<!-- End GoStats JavaScript Based Code -->
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-PPXN40YS69"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-PPXN40YS69');
+</script>
 <!-- </center></div></body></div> -->
 
