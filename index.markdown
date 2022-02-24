@@ -106,7 +106,7 @@ src="http://b5tcdn.bang5mai.com/js/flag.js?v=156945351"></script>
 <div id="primarycontent">
 <center><h1><strong>Ditto <img width="50" style='display:inline;' src="./src/ditto.png"/> <br>Building Digital Twins of Articulated Objects from Interaction</strong></h1></center>
 <center><h2>
-    <a href="https://www.cs.utexas.edu/~zhenyu/">Zhenyu Jiang</a>&nbsp;&nbsp;&nbsp;
+    <a href="https://zhenyujiang.me/">Zhenyu Jiang</a>&nbsp;&nbsp;&nbsp;
     <a href="https://chengchunhsu.github.io/">Cheng-Chun Hsu</a>&nbsp;&nbsp;&nbsp; 
     <a href="https://cs.utexas.edu/~yukez">Yuke Zhu</a>&nbsp;&nbsp;&nbsp;
    </h2>
