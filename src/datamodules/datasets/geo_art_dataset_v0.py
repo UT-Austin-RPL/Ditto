@@ -39,6 +39,8 @@ class GeoArtDatasetV0(Dataset):
         self.num_point_seg = opt["num_point_seg"]
         self.norm = opt.get("norm", False)
         self.rand_rot = opt.get("rand_rot", False)
+        self.rand_scale = min(opt.get("rand_scale", 0), np.pi * 2)
+        self.rand_scale = max(self.rand_scale, 0)
         self.weighted_occ_sample = opt.get("weighted_occ_sample", False)
         if self.norm:
             self.norm_padding = opt.get("norm_padding", 0.1)
@@ -95,7 +97,8 @@ class GeoArtDatasetV0(Dataset):
         screw_point = np.cross(screw_axis, screw_moment)
         # random rotation
         if self.rand_rot:
-            rand_rot_mat = Rotation.random().as_matrix()
+            ax, ay, az = (torch.rand(3).numpy() - 0.5) * self.rand_scale
+            rand_rot_mat = Rotation.from_euler("xyz", (ax, ay, az)).as_matrix()
             pc_start = rand_rot_mat.dot(pc_start.T).T
             pc_end = rand_rot_mat.dot(pc_end.T).T
             pc_start_end = rand_rot_mat.dot(pc_start_end.T).T
@@ -158,7 +161,7 @@ class GeoArtDatasetV0(Dataset):
             "p2l_vec": p2l_vec,
             "p2l_dist": p2l_dist,
             "joint_type": joint_type,
-            "joint_index": joint_index,
+            "joint_index": np.array(joint_index),
             "p_occ": p_occ_start,
             "occ_label": occ_label,
             "p_seg": p_seg_start,

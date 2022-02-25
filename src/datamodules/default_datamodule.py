@@ -5,6 +5,9 @@ from pytorch_lightning import LightningDataModule
 from torch.utils.data import Dataset, random_split
 
 from src.datamodules.datasets import create_dataloader, create_dataset
+from src.utils import utils
+
+log = utils.get_logger(__name__)
 
 
 class DefaultDataModule(LightningDataModule):
@@ -35,18 +38,30 @@ class DefaultDataModule(LightningDataModule):
     def setup(self, stage: Optional[str] = None):
         """Load data. Set variables: self.data_train, self.data_val, self.data_test."""
         self.data_train = create_dataset(self.opt.train)
+        log.info(
+            f"Train dataset [{type(self.data_train).__name__}] of size {len(self.data_train)} created."
+        )
         self.data_val = create_dataset(self.opt.val)
+        log.info(
+            f"Val dataset [{type(self.data_val).__name__}] of size {len(self.data_val)} created."
+        )
         if self.opt.get("test", None):
             self.data_test = create_dataset(self.opt.test)
+            log.info(
+                f"Test dataset [{type(self.data_test).__name__}] of size {len(self.data_test)} created."
+            )
 
     def train_dataloader(self):
         dl_train = create_dataloader(self.data_train, self.opt.train, "train")
+        log.info(f"Train dataloader of size {len(dl_train)} created.")
         return dl_train
 
     def val_dataloader(self):
         dl_val = create_dataloader(self.data_val, self.opt.val, "val")
+        log.info(f"Val dataloader of size {len(dl_val)} created.")
         return dl_val
 
     def test_dataloader(self):
         dl_test = create_dataloader(self.data_test, self.opt.test, "test")
+        log.info(f"Test dataloader of size {len(dl_test)} created.")
         return dl_test
