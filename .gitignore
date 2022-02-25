@@ -143,7 +143,6 @@ dmypy.json
 data/
 logs/
 wandb/
-notebooks/
 .env
 .autoenv
 data

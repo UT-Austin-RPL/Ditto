@@ -46,6 +46,12 @@ python run.py trainer.gpus=4 +trainer.accelerator='ddp' logger=wandb logger.wand
 python run_test.py experiment=Ditto_s2m trainer.resume_from_checkpoint=/path/to/trained/model/
 ```
 
+## Demo
+
+[Here](notebooks/demo_depth_map.ipynb) is a minimum demo that starts from multiview depth maps before and after interaction and ends with a reconstructed digital twin. To run the demo, you need to install this [library](https://github.com/Steve-Tod/utils3d) for visualization.
+
+We provide the posed depth images of a real word muisc box to run the demo. You can download from [here](https://utexas.box.com/s/ujb2ky8y9vaog7nheth1n3tmm1rgx9t7) and put it under `data`. You can also run demo your own data that follows the same format.
+
 ## Data and pre-trained models
 
 Data: [here](https://utexas.box.com/s/1wiynn7ql42c3mi1un7ynncfxr86ep22). Remeber to cite [Shape2Motion](assets/s2m.bib) and [Abbatematteo *et al.*](#citing) as well as [Ditto](assets/ditto.bib) when using these datasets.
