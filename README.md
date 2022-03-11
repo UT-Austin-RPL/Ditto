@@ -57,7 +57,7 @@ We provide the posed depth images of a real word muisc box to run the demo. You 
 
 Data: [here](https://utexas.box.com/s/1wiynn7ql42c3mi1un7ynncfxr86ep22). Remeber to cite [Shape2Motion](assets/s2m.bib) and [Abbatematteo *et al.*](#citing) as well as [Ditto](assets/ditto.bib) when using these datasets.
 
-Pre-trained models: [Shape2Motion dataset](https://utexas.box.com/s/ktckf75xo33plf5nidyvqz9bn20jwv06), [Synthetic dataset](https://utexas.box.com/s/zbf5bja20n2w6umryb1bcfbbcm3h2ysn).
+Pre-trained models: [Shape2Motion dataset](https://utexas.box.com/s/a4h001b3ciicrt3f71t4xd3wjsm04be7), [Synthetic dataset](https://utexas.box.com/s/zbf5bja20n2w6umryb1bcfbbcm3h2ysn).
 
 ## Useful tips
 
