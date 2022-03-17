@@ -49,9 +49,9 @@ python run_test.py experiment=Ditto_s2m trainer.resume_from_checkpoint=/path/to/
 
 ## Demo
 
-[Here](notebooks/demo_depth_map.ipynb) is a minimum demo that starts from multiview depth maps before and after interaction and ends with a reconstructed digital twin. To run the demo, you need to install this [library](https://github.com/Steve-Tod/utils3d) for visualization, and use [this model weight](https://utexas.box.com/s/ktckf75xo33plf5nidyvqz9bn20jwv06).
+[Here](notebooks/demo_depth_map.ipynb) is a minimum demo that starts from multiview depth maps before and after interaction and ends with a reconstructed digital twin. To run the demo, you need to install this [library](https://github.com/Steve-Tod/utils3d) for visualization.
 
-We provide the posed depth images of a real word muisc box to run the demo. You can download from [here](https://utexas.box.com/s/ujb2ky8y9vaog7nheth1n3tmm1rgx9t7) and put it under `data`. You can also run demo your own data that follows the same format.
+We provide the posed depth images of a real word laptop to run the demo. You can download from [here](https://utexas.box.com/s/0kikho1m4zzswn0w2xvtv81cmczqu4tx) and put it under `data`. You can also run demo your own data that follows the same format.
 
 ## Data and pre-trained models
 
