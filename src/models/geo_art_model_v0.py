@@ -323,7 +323,6 @@ class GeoArtModelV0(pl.LightningModule):
                 json.dump(bbox_dict, f)
 
         c = self.model.encode_inputs(data["pc_start"], data["pc_end"])
-        mobile_points_all = data["p_seg"][data["seg_label"].bool()].unsqueeze(0)
         mesh_dict = None
 
         result = {
