@@ -257,7 +257,7 @@ cellpadding="0"><tr><td>
 @inproceedings{jiang2022ditto,
    title={Ditto: Building Digital Twins of Articulated Objects from Interaction},
    author={Jiang, Zhenyu and Hsu, Cheng-Chun and Zhu, Yuke},
-   booktitle={arXiv preprint arXiv:2202.08227},
+   booktitle={Conference on Computer Vision and Pattern Recognition (CVPR)},
    year={2022}
 }
 </code></pre>
