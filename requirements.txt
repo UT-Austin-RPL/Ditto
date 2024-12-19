@@ -40,4 +40,5 @@ open3d==0.12.0
 pybullet==2.7.9
 trimesh
 cython
-pykdtree
+numpy==1.9.5
+pykdtree==1.3.2
