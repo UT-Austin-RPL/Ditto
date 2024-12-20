@@ -41,4 +41,4 @@ pybullet==2.7.9
 trimesh
 cython
 numpy==1.9.5
-pykdtree==1.3.2
+pykdtree==1.3.0
